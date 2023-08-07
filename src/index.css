@@ -1,3 +1,76 @@
 h1 {
     color: red;
 }
+
+#watch {
+    width: 200px;
+    height: 200px;
+    background-color: #224b8f; 
+    border-radius: 50%; 
+    position: relative;
+    border: black solid;
+  }
+  
+  .dial {
+    width: 125px;
+    height: 85px;
+    border-radius: 25px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: green solid;
+  }
+
+  .day {
+    background-color: lightgray;
+  }
+
+  .night {
+    background-color: #ffffff;
+  }
+
+  .dial span {
+    color: black;
+    font-size: 30px;
+  }  
+  
+  .seconds {
+    font-size: 15px !important
+  }
+
+  .time {
+    margin-top: 25px;
+    margin-left: 20px;
+  }
+ 
+  .bouton {
+    width: 20px;
+    height: 10px;
+    background-color: #80a9d7; 
+    position: absolute;
+  }
+  
+
+  .bouton.mode {
+    top: 50px;
+    left: 185px;
+    transform: rotate(65deg);
+  }
+  
+  .bouton.increase {
+    top: 150px;
+    left: 180px;
+    transform: rotate(-58deg);
+  }
+  
+  .bouton.light {
+    top: 150px;
+    left: 00px;
+    transform: rotate(58deg);
+  }
+  
+  .bouton:hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }

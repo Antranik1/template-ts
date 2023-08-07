@@ -7,5 +7,10 @@
     "moduleResolution": "node",
     "jsx": "react",
     "allowJs": true
-  }
+  },
+  "exclude": [
+    "src/test",
+    "./node_modules/",
+    "./dist/"
+  ],
 }
