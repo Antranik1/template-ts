@@ -1,3 +1,4 @@
+export {};
 import "./index.css";
 import { getTimeZones } from "./model/timezones";
 import { Diagram } from "./watch/diagram";

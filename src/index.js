@@ -1,27 +1,3 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title><%= htmlWebpackPlugin.options.title %></title>
-    <!-- support for mobile touch devices -->
-    <meta
-      name="viewport"
-      content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1"
-    />
-  </head>
-  <body>
-    <h1>Actual time</h1>
-    <label for="timezones">Time zones list:</label>
-    <select name="timezones" id="timezones"></select>
-    <div id="allClocks">
-      <br />
-      <div id="clockDefault"></div>
-    </div>
-    <br />
-    <button id="addClockButton">Add Clock</button>
-  </body>
-</html>
-
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 require("./index.css");
