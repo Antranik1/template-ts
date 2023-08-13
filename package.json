@@ -11,7 +11,9 @@
     "start-node": "node dist/bundle.js",
     "start": "webpack serve --mode development --config webpack.config.js",
     "all": "npm run build && npm run start",
-    "format": "prettier --write \"**/*.{html,ts}\""
+    "format": "prettier --write \"**/*.{html,ts}\"  --ignore-path ./.eslintignore",
+    "lint": "npm run lint:eslint",
+    "lint:eslint": "eslint \"src/**/**.ts\""
   },
   "author": "",
   "license": "ISC",
@@ -25,6 +27,9 @@
     "playwright": "^1.36.2",
     "prettier": "3.0.1",
     "prettier-plugin-packagejson": "2.4.5",
+    "@typescript-eslint/eslint-plugin": "^6.2.1",
+    "@typescript-eslint/parser": "^6.2.1",
+    "eslint": "8.46.0",
     "rimraf": "^3.0.2",
     "style-loader": "^3.2.1",
     "ts-loader": "^8.1.0",

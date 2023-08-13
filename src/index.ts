@@ -1,63 +1,59 @@
 import "./index.css";
 import { getTimeZones } from "./model/timezones";
 import { Diagram } from "./watch/diagram";
+import { watchTemplate } from "./watch/watch-template";
 
-fetch("src/watch/watch.html")
-  .then((response) => response.text())
-  .then((data) => {
-    populateTimeZonesSelect();
+document.addEventListener("DOMContentLoaded", () => {
+  const defaultId = "clockDefault";
+  const defaultElement = document.getElementById(defaultId);
+  defaultElement.innerHTML = watchTemplate(defaultId);
+  populateTimeZonesSelect();
+  const defaulAddedTime = 0;
+  const allClocksElement = document.getElementById("allClocks");
+  const addClockButton = document.getElementById("addClockButton");
 
-    const defaultMode = 0;
-    const defaulAddedTime = 0;
-    const allClocksElement = document.getElementById("allClocks");
-    const addClockButton = document.getElementById("addClockButton");
-    const intervalId: NodeJS.Timeout | null = null;
-    let clockIndex = 1;
-    if (addClockButton && allClocksElement) {
-      addClockButton.addEventListener("click", () => {
-        const selectedtimeZone = getSelectedTimeZone();
-        console.log("Selected time zone : " + selectedtimeZone);
-
-        const newClock = document.createElement("div");
-        const newClockId = `clock${clockIndex}`;
-        newClock.id = newClockId;
-
-        const titleElement = document.createElement("h1");
-        titleElement.textContent = selectedtimeZone;
-        allClocksElement.appendChild(titleElement);
-        allClocksElement.appendChild(newClock);
-
-        const diffTime = getTimeDifferenceInHours(selectedtimeZone);
-
-        setClock(data, newClockId, defaultMode, diffTime, intervalId);
-        clockIndex++;
-      });
+  const diagramInstances: Diagram[] = [];
+  setInterval(() => {
+    for (const instance of diagramInstances) {
+      instance.updateClock();
     }
+  }, 1000);
 
-    const defaultId = "clockDefault";
-    setClock(data, defaultId, defaultMode, defaulAddedTime, intervalId);
-  })
-  .catch((error) =>
-    console.error("Erreur lors du chargement de watch.html", error),
-  );
+  let clockIndex = 1;
+  if (addClockButton && allClocksElement) {
+    addClockButton.addEventListener("click", () => {
+      const selectedtimeZone = getSelectedTimeZone();
+      console.log("Selected time zone : " + selectedtimeZone);
+
+      const newClock = document.createElement("div");
+      const newClockId = `clock${clockIndex}`;
+      newClock.id = newClockId;
+
+      const titleElement = document.createElement("h1");
+      titleElement.textContent = selectedtimeZone;
+      allClocksElement.appendChild(titleElement);
+      allClocksElement.appendChild(newClock);
+
+      const diffTime = getTimeDifferenceInHours(selectedtimeZone);
+
+      setClock(newClockId, diffTime, diagramInstances);
+      clockIndex++;
+    });
+  }
+  setClock(defaultId, defaulAddedTime, diagramInstances);
+});
 
 function setClock(
-  data: string,
   clockId: string,
-  defaultMode: number,
   addedTime: number,
-  intervalId: NodeJS.Timeout | null,
+  diagramInstances: Diagram[],
 ) {
   const watchContentElement = document.getElementById(clockId);
-  if (watchContentElement) {
-    watchContentElement.innerHTML = data;
-  }
+  watchContentElement.innerHTML = watchTemplate(clockId + "animation");
 
-  const diagram = new Diagram(defaultMode, addedTime, 0, clockId);
+  const diagram = new Diagram(addedTime, 0, clockId);
+  diagramInstances.push(diagram);
   diagram.initClock();
-  if (intervalId === null) {
-    setInterval(diagram.updateClock, 1000);
-  }
 
   const mode = watchContentElement.querySelector("#mode");
   if (mode) {
@@ -91,6 +87,34 @@ function setClock(
   if (changeAmPm) {
     changeAmPm.addEventListener("click", () => {
       diagram.changeAmPm();
+    });
+  }
+
+  const rotate = watchContentElement.querySelector("#rotate");
+  if (rotate) {
+    rotate.addEventListener("click", () => {
+      diagram.activateRotation();
+    });
+  }
+
+  const flip = watchContentElement.querySelector("#flip");
+  if (flip) {
+    flip.addEventListener("click", () => {
+      diagram.activateFlip();
+    });
+  }
+
+  const multiply = watchContentElement.querySelector("#multiply");
+  if (multiply) {
+    multiply.addEventListener("click", () => {
+      diagram.multiply();
+    });
+  }
+
+  const translate = watchContentElement.querySelector("#translate");
+  if (translate) {
+    translate.addEventListener("click", () => {
+      diagram.activateTranslation();
     });
   }
 }

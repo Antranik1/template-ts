@@ -1,3 +1,4 @@
+export const watchTemplate = (clockId: string): string => `
 <!doctype html>
 <html>
   <div id="${clockId}" class="watch animate">
@@ -35,3 +36,4 @@
     </fieldset>
   </div>
 </html>
+`;
